@@ -16,6 +16,9 @@ if(!defined('_LIBS')){
 if(!defined('_MODS')){
 	define('_MODS', _SITE . 'mods' . DS);
 }
+if(!defined('_MODULES')){
+	define('_MODULES', _SITE . 'modules' . DS);
+}
 if(!defined('_VIEWS')){
 	define('_VIEWS', _SITE . 'views' . DS);
 }
@@ -45,6 +48,9 @@ if(!defined('_SMARTY_COMPILED')){
 if(!defined('_SMARTY_CACHE')){
 	define('_SMARTY_CACHE', _DATA . 'caches' . DS);
 }
+if(!defined('_HTMLDOM')){
+	define('_HTMLDOM', _LIBS . 'Htmldom' . DS);
+}
 //======================================== Config
 $GLOBALS['CONFIG_DATABASE'] = array(
 	'host'      => '127.0.0.1',
@@ -58,3 +64,21 @@ $GLOBALS['CONFIG_DATABASE'] = array(
 $GLOBALS['SLEEP_TIME'] = array(
 	'time'      => 300,      //second
 );
+
+foreach (glob(_LIBS."/*.php") as $libs){
+	require_once $libs;
+}
+foreach (glob(_MODS."/*.php") as $mods){
+	require_once $mods;
+}
+foreach (glob(_MODULES."/*.php") as $modules){
+	require_once $modules;
+}
+foreach (glob(_SMARTY."/*.php") as $lib_smarty){
+	require_once $lib_smarty;
+}
+foreach (glob(_HTMLDOM."/*.php") as $htmldom){
+	require_once $htmldom;
+}
+
+
