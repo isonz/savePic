@@ -3,12 +3,14 @@ class SouutuComMnmm
 {
 	static private $_indexurl = "http://www.souutu.com/mnmm/index.html";
     static private $_nexturl = "http://www.souutu.com/mnmm/index_#.html";
-    static private $_cur_pos = array(1,1,1);	//第1页第1个系列第1张图
+    static private $_cur_pos = array(1,1,1);
 	static private $_urls = array();
     
 	static public function run()
 	{
-		self::getIndexPageUrls();
+		$urls = self::getIndexPageUrls();
+		$urls = self::getInfoPages($urls);
+		$urls = self::getInfoPics($urls);
 	}
 	
     static protected function getIndexPageUrls()
@@ -20,23 +22,42 @@ class SouutuComMnmm
     	$html = file_get_html($url);
     	if(!$html) return false;
     	
+    	$urls = array();
     	foreach ($html->find("#load-img ul li") as $li){
     		foreach ($li->find(".timg a ") as $a){
-    			var_dump($a);
-    			exit;
-    			self::$_urls[$a['href']]="";
+    			$urls[$a->href] = self::$_urls[$a->href]= "";
     		}
-    		exit;
     	}
-    	var_dump(self::$_urls);exit;
+    	$index_page_num++;
+    	return $urls;
     }
 
+    static protected function getInfoPages($urls)
+    {
+    	$tmp = array();
+    	foreach ($urls as $url => $v){
+    		$html = file_get_html($url);
+    		if(!$html) return false;
+    		foreach ($html->find("#showImg li a") as $a){
+    			$tmp[$a->href] = self::$_urls[$url][$a->href]= "";
+    		};
+    	}
+    	return $tmp;
+    }
+    
+    static protected function getInfoPics($urls)
+    {
+    	foreach ($urls as $url => $v){
+    		$html = file_get_html($url);
+    		if(!$html) return false;
+    		foreach ($html->find("#bigImg") as $img){
+    			$pic = $img->src;
+    			$title = $img->alt;
+    			$ext=strrchr($pic,".");
+    			Func::downImage($pic, $title.$ext);
+    		}
+    	}
+    }
     
 }
 
-
-/*
- 
- object(simple_html_dom_node)#574 (9) { ["nodetype"]=> int(1) ["tag"]=> string(1) "a" ["attr"]=> array(2) { ["href"]=> string(41) "http://www.souutu.com/mnmm/xgmm/7016.html" ["target"]=> string(6) "_blank" } ["children"]=> array(1) { [0]=> object(simple_html_dom_node)#575 (9) { ["nodetype"]=> int(1) ["tag"]=> string(3) "img" ["attr"]=> array(4) { ["src"]=> string(65) "http://img.souutu.com/2015/0709/20150709065402302.jpg.234.360.jpg" ["width"]=> string(3) "234" ["height"]=> string(3) "360" ["title"]=> string(67) "秀色可餐 大奶美女瑞莎紧身性感巴塞标志内衣写真" } ["children"]=> array(0) { } ["nodes"]=> array(0) { } ["parent"]=> *RECURSION* ["_"]=> array(5) { [0]=> int(570) [2]=> array(4) { [0]=> int(0) [1]=> int(0) [2]=> int(0) [3]=> int(0) } [3]=> array(4) { [0]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } [1]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } [2]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } [3]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } } [7]=> string(1) "/" [1]=> int(0) } ["tag_start"]=> int(14905) ["dom":"simple_html_dom_node":private]=> object(simple_html_dom)#4 (23) { ["root"]=> object(simple_html_dom_node)#5 (9) { ["nodetype"]=> int(5) ["tag"]=> string(4) "root" ["attr"]=> array(0) { } ["children"]=> array(3) { [0]=> object(simple_html_dom_node)#6 (9) { ["nodetype"]=> int(6) ["tag"]=> string(7) "unknown" ["attr"]=> array(0) { } ["children"]=> array(0) { } ["nodes"]=> array(0) { } ["parent"]=> *RECURSION* ["_"]=> array(2) { [0]=> int(1) [4]=> string(121) "" } ["tag_start"]=> int(0) ["dom":"simple_html_dom_node":private]=> *RECURSION* } [1]=> object(simple_html_dom_node)#8 (9) { ["nodetype"]=> int(1) ["tag"]=> string(4) "html" ["attr"]=> array(2) { ["xmlns"]=> string(28) "http://www.w3.org/1999/xhtml" ["xmlns:wb"]=> string(24) "http://open.weibo.com/wb" } ["children"]=> array(2) { [0]=> object(simple_html_dom_node)#10 (9) { ["nodetype"]=> int(1) ["tag"]=> string(4) "head" ["attr"]=> array(0) { } ["children"]=> array(19) { [0]=> object(simple_html_dom_node)#12 (9) { ["nodetype"]=> int(1) ["tag"]=> string(4) "meta" ["attr"]=> array(2) { ["http-equiv"]=> string(12) "Content-Type" ["content"]=> string(24) "text/html; charset=utf-8" } ["children"]=> array(0) { } ["nodes"]=> array(0) { } ["parent"]=> *RECURSION* ["_"]=> array(5) { [0]=> int(7) [2]=> array(2) { [0]=> int(0) [1]=> int(0) } [3]=> array(2) { [0]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } [1]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } } [7]=> string(2) " /" [1]=> int(0) } ["tag_start"]=> int(209) ["dom":"simple_html_dom_node":private]=> *RECURSION* } [1]=> object(simple_html_dom_node)#14 (9) { ["nodetype"]=> int(1) ["tag"]=> string(4) "meta" ["attr"]=> array(2) { ["http-equiv"]=> string(12) "mobile-agent" ["content"]=> string(43) "format=html5; url=http://m.souutu.com/mnmm/" } ["children"]=> array(0) { } ["nodes"]=> array(0) { } ["parent"]=> *RECURSION* ["_"]=> array(4) { [0]=> int(9) [2]=> array(2) { [0]=> int(0) [1]=> int(0) } [3]=> array(2) { [0]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } [1]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } } [7]=> string(0) "" } ["tag_start"]=> int(279) ["dom":"simple_html_dom_node":private]=> *RECURSION* } [2]=> object(simple_html_dom_node)#16 (9) { ["nodetype"]=> int(1) ["tag"]=> string(4) "meta" ["attr"]=> array(2) { ["http-equiv"]=> string(12) "mobile-agent" ["content"]=> string(43) "format=xhtml; url=http://m.souutu.com/mnmm/" } ["children"]=> array(0) { } ["nodes"]=> array(0) { } ["parent"]=> *RECURSION* ["_"]=> array(4) { [0]=> int(11) [2]=> array(2) { [0]=> int(0) [1]=> int(0) } [3]=> array(2) { [0]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } [1]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } } [7]=> string(0) "" } ["tag_start"]=> int(366) ["dom":"simple_html_dom_node":private]=> *RECURSION* } [3]=> object(simple_html_dom_node)#18 (9) { ["nodetype"]=> int(1) ["tag"]=> string(5) "title" ["attr"]=> array(0) { } ["children"]=> array(0) { } ["nodes"]=> array(1) { [0]=> object(simple_html_dom_node)#19 (9) { ["nodetype"]=> int(3) ["tag"]=> string(4) "text" ["attr"]=> array(0) { } ["children"]=> array(0) { } ["nodes"]=> array(0) { } ["parent"]=> *RECURSION* ["_"]=> array(1) { [4]=> string(114) "性感美女图片 大全_美女图片 高清_最全高清美女图片,写真,大图免费下载 - 搜优图片网" } ["tag_start"]=> int(0) ["dom":"simple_html_dom_node":private]=> *RECURSION* } } ["parent"]=> *RECURSION* ["_"]=> array(3) { [0]=> int(13) [7]=> string(0) "" [1]=> int(15) } ["tag_start"]=> int(453) ["dom":"simple_html_dom_node":private]=> *RECURSION* } [4]=> object(simple_html_dom_node)#21 (9) { ["nodetype"]=> int(1) ["tag"]=> string(4) "meta" ["attr"]=> array(2) { ["name"]=> string(8) "keywords" ["content"]=> string(121) "美女图片,性感美女,美女写真,美女照片,性感美女图片,美女图片大全,美女图片高清,美女下载" } ["children"]=> array(0) { } ["nodes"]=> array(0) { } ["parent"]=> *RECURSION* ["_"]=> array(4) { [0]=> int(16) [2]=> array(2) { [0]=> int(0) [1]=> int(0) } [3]=> array(2) { [0]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } [1]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } } [7]=> string(0) "" } ["tag_start"]=> int(583) ["dom":"simple_html_dom_node":private]=> *RECURSION* } [5]=> object(simple_html_dom_node)#23 (9) { ["nodetype"]=> int(1) ["tag"]=> string(4) "meta" ["attr"]=> array(2) { ["name"]=> string(11) "description" ["content"]=> string(385) "搜优图美女图片栏目-专注于美女图片，高清美女图片，美女写真，性感美女，高清性感美女写真图片内容的搜集和下载。包含了有性感美女，清纯美女、模特、车模、美腿丝袜、非主流美女、体育宝贝、美女车模等分类。分地区的日本、韩国、欧美和明星等一系列高清美女图片免费下载哦。" } ["children"]=> array(0) { } ["nodes"]=> array(0) { } ["parent"]=> *RECURSION* ["_"]=> array(4) { [0]=> int(18) [2]=> array(2) { [0]=> int(0) [1]=> int(0) } [3]=> array(2) { [0]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } [1]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } } [7]=> string(0) "" } ["tag_start"]=> int(738) ["dom":"simple_html_dom_node":private]=> *RECURSION* } [6]=> object(simple_html_dom_node)#25 (9) { ["nodetype"]=> int(1) ["tag"]=> string(4) "meta" ["attr"]=> array(2) { ["http-equiv"]=> string(13) "Cache-Control" ["content"]=> string(10) "no-siteapp" } ["children"]=> array(0) { } ["nodes"]=> array(0) { } ["parent"]=> *RECURSION* ["_"]=> array(5) { [0]=> int(20) [2]=> array(2) { [0]=> int(0) [1]=> int(0) } [3]=> array(2) { [0]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } [1]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } } [7]=> string(2) " /" [1]=> int(0) } ["tag_start"]=> int(1160) ["dom":"simple_html_dom_node":private]=> *RECURSION* } [7]=> object(simple_html_dom_node)#27 (9) { ["nodetype"]=> int(1) ["tag"]=> string(4) "link" ["attr"]=> array(3) { ["rel"]=> string(10) "stylesheet" ["type"]=> string(8) "text/css" ["href"]=> string(57) "http://www.souutu.com/statics/xcweb/css/index.css?2015052" } ["children"]=> array(0) { } ["nodes"]=> array(0) { } ["parent"]=> *RECURSION* ["_"]=> array(5) { [0]=> int(22) [2]=> array(3) { [0]=> int(0) [1]=> int(0) [2]=> int(0) } [3]=> array(3) { [0]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } [1]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } [2]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } } [7]=> string(2) " /" [1]=> int(0) } ["tag_start"]=> int(1217) ["dom":"simple_html_dom_node":private]=> *RECURSION* } [8]=> object(simple_html_dom_node)#29 (9) { ["nodetype"]=> int(1) ["tag"]=> string(4) "link" ["attr"]=> array(3) { ["href"]=> string(53) "http://www.souutu.com/statics/xcweb/css/topnavcss.css" ["rel"]=> string(10) "stylesheet" ["type"]=> string(8) "text/css" } ["children"]=> array(0) { } ["nodes"]=> array(0) { } ["parent"]=> *RECURSION* ["_"]=> array(5) { [0]=> int(24) [2]=> array(3) { [0]=> int(0) [1]=> int(0) [2]=> int(0) } [3]=> array(3) { [0]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } [1]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } [2]=> array(3) { [0]=> string(1) " " [1]=> string(0) "" [2]=> string(0) "" } } [7]=> string(2) " /" [1]=> int(0) } ["tag_start"]=> int(1324) ["dom":"simple_html_dom_node":private]=> *RECURSION* } [9]=> object(simple_html_dom_node)#31 (9) { ["nodetype"]=> int(1) ["tag"]=> string(6) "script" ["attr"]=> array(2) { ["type"]=> string(15) "text/javascript" ["src"]=> string(52) "http://www.souutu.com/statics/xcweb/js/jquery.min.js" } ["children"]=> array(0) { } ["nodes"]=> array(1) { [0]=> object(simple_html_dom_node)#32 (9) { ["nodetype"]=> int(3) ["tag"]=> string(4) "text" ["attr"]=> array(0) { } ["children"]=> array(0) { } ["nodes"]=> array(0) { } ["parent"]=> *RECURSION* ["_"]=> array(1) { [4]=> string(16) "___noise___ 1038" } ["tag_start"]=> int(0) ["dom":"simple_html_dom_node":private]=> *RECURSION* } } ["parent"]=> *RECURSION* ["_"]=> array(5) { [0]=> int(26) [2]=> array(2) { [0]=> in
- 
- */

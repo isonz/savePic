@@ -304,4 +304,41 @@ class Func
 		return (int)$result;
 	}
 	
+	function createDir($aimUrl) 
+	{
+		$aimUrl = str_replace(' ', '/', $aimUrl);
+		$aimDir = '';
+		$arr = explode('/', $aimUrl);
+		$result = true;
+		foreach ($arr as $str) {
+			$aimDir .= $str . '/';
+			if (!file_exists($aimDir)) {
+				$result = mkdir($aimDir);
+			}
+		}
+		return $result;
+	}
+	
+	function downImage($url, $filename="")
+	{ 
+		if($url=="") return false; 
+		
+		if($filename=="") { 
+			$ext=strrchr($url,"."); 
+			if($ext!=".gif" && $ext!=".jpg" && $ext!=".png") return false; 
+			$filename=date("YmdHis").$ext; 
+		} 
+		
+		ob_start(); 
+		readfile($url); 
+		$img = ob_get_contents(); 
+		ob_end_clean(); 
+		$size = strlen($img); 
+		
+		$fp2=@fopen($filename, "a"); 
+		//$imageFile = stream_get_contents($fp2);
+		fwrite($fp2,$img); 
+		fclose($fp2); 
+		return $filename; 
+	} 
 }
