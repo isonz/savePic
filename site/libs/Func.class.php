@@ -304,8 +304,9 @@ class Func
 		return (int)$result;
 	}
 	
-	function createDir($aimUrl) 
+	static function createDir($aimUrl) 
 	{
+		if(!$aimUrl) return false;
 		$aimUrl = str_replace(' ', '/', $aimUrl);
 		$aimDir = '';
 		$arr = explode('/', $aimUrl);
@@ -319,7 +320,7 @@ class Func
 		return $result;
 	}
 	
-	function downImage($url, $filename="")
+	static function downImage($url, $filename="")
 	{ 
 		if($url=="") return false; 
 		
