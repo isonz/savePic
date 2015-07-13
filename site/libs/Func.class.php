@@ -320,15 +320,10 @@ class Func
 		return $result;
 	}
 	
-	static function downImage($url, $filename="")
+	static function downImage($url, $filename)
 	{ 
-		if($url=="") return false; 
-		
-		if($filename=="") { 
-			$ext=strrchr($url,"."); 
-			if($ext!=".gif" && $ext!=".jpg" && $ext!=".png") return false; 
-			$filename=date("YmdHis").$ext; 
-		} 
+		if(!$url || !$filename) return false; 
+		if (file_exists($filename)) return false;
 		
 		ob_start(); 
 		readfile($url); 
