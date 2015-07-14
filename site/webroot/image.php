@@ -1,14 +1,23 @@
 <?php
 $category = isset($_REQUEST['c']) ? $_REQUEST['c'] : null;
 $picfolder  = isset($_REQUEST['p']) ? $_REQUEST['p'] : null;
+$first  = isset($_REQUEST['first']) ? $_REQUEST['first'] : 0;
+$filename = isset($_REQUEST['name']) ? $_REQUEST['name'] : null;
 
 if(!$picfolder || !$category){
 	
 }else{
 	$folder = _DOWNLOAD.$category.DS.$picfolder.DS;
-	$filename = ImagePlay::getFolderFirstImage($folder);
+	if($filename){
+		$filename = $folder.$filename;
+	}else if($first){
+		$filename = ImagePlay::getFolderFirstImage($folder);
+	}else{
+		exit('Param Error.');
+	}
+	
 	if (!file_exists($filename)) {
-		
+		exit("Not Found Image.");
 	} else {
 		$ext = substr(strrchr($filename, '.'), 1);
 		switch ($ext){

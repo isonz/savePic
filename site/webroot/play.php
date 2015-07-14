@@ -2,6 +2,8 @@
 $category = isset($_REQUEST['c']) ? $_REQUEST['c'] : null;
 $ajax = isset($_REQUEST['ajax']) ? $_REQUEST['ajax'] : null;
 if(!$ajax){
+	$page_title = $category ? $category : "Play";
+	Templates::Assign('page_title', $page_title);
 	Templates::Assign('category', $category);
 	Templates::Display('play.tpl');
 }else{

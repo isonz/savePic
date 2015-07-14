@@ -103,6 +103,7 @@ ul li{
 #content .imgbox {width:250px; height:400px;overflow:hidden; float:left; margin:10px;border: 1px #ccc solid;}
 #content .imgbox img{width:100%;}
 #content .imgbox p{margin-top:5px; text-align:center;}
+#content .pics{margin:0 auto; margin:10px 0; text-align:center;}
 
 #paged {width:98%; margin:0 auto; padding-top:10px;}
 #paged ul{margin-right:40px;}

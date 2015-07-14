@@ -34,6 +34,13 @@ class ImagePlay
 		ABase::toJson(0,'ok',$dirs);
 	}
 	
+	static public function getPics($dirs)
+	{
+		if(!$dirs) return false;
+		$files = self::get1DirsOrFile($dirs,'file',0);
+		return $files;
+	}
+	
 	static public function get1DirsOrFile($dirs,$type="dir", $realpath=1)
 	{
 		if(!$dirs) return false;

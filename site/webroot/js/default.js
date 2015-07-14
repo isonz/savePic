@@ -46,12 +46,12 @@ function getPagesCount()
 function getPagePic(page)
 {
 	if(''==CATE) return false;
-	$.getJSON('',{c:CATE,ajax:1,type:'getPagePic',page:page,size:pagesize},function(json){
+	$.getJSON('',{c:CATE,ajax:1,type:'getPagePic',page:page,size:pagesize,first:1},function(json){
 		var data='';
 		if(0==json.status){
 			var jd=json.data;
 			for(var i=0; i<jd.length; i++){
-				data += '<div class="imgbox"><img src="/image/?c='+CATE+'&p='+jd[i]+'" /><p>'+jd[i]+'</p></div>';
+				data += '<div class="imgbox"><a href="/pic/?c='+CATE+'&p='+jd[i]+'" target="_blank"><img src="/image/?c='+CATE+'&p='+jd[i]+'&first=1" /></a><p>'+jd[i]+'</p></div>';
 			}
 		}else{
 			data = 'No data.';
