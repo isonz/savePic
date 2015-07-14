@@ -29,6 +29,7 @@ class ImagePlay
 	{
 		if(!$dirs) return false;
 		$dirs = self::get1DirsOrFile($dirs,'dir',0);
+		rsort($dirs);
 		$start = $size*($page-1);
 		$dirs = array_slice($dirs, $start, $size);
 		ABase::toJson(0,'ok',$dirs);
