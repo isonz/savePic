@@ -73,6 +73,13 @@ Abstract class ABase
     	error_log(date('Y-m-d H:i:s').", Error:".$error."\n\t", 3, _LOGS . 'code.'.date('Ymd').'.log');
     }
     
+    static  function toJson($status=1, $msg='', $data=array())
+    {
+    	if($status) self::log($status.':'.$msg);
+    	exit(json_encode(array('status'=>$status,'msg'=>$msg, 'data'=>$data)));
+    }
+    
+    
 }
 
 

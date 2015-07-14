@@ -45,6 +45,7 @@ a.input-bg {
 .clearfix {
 	_zoom: 1;
 }
+.clearfix:after {visibility: hidden;display: block;font-size:0;content: ".";clear:both;height:0;}
 .catelogdiv .a{
 	font-family: "΢���ź�";
 	font-size: 12px;
@@ -80,7 +81,7 @@ ul li{
 }
 #footer{
 	width:100%;
-	margin-top:20px;
+	margin-top:30px;
 }
 .green-line{
 	width:100%;
@@ -89,10 +90,26 @@ ul li{
 	clear: both;
 }
 .copyright{
-	line-height:50px;
+	line-height:30px;
 	text-align:center;
-	background: #C0F8C5;
+	background: #fff;
 }
 .hidename,a.hidename{
 	color:#fff;
 }
+
+/****************** play *****************************/
+#content {width:100%;}
+#content .imgbox {width:250px; height:400px;overflow:hidden; float:left; margin:10px;border: 1px #ccc solid;}
+#content .imgbox img{width:100%;}
+#content .imgbox p{margin-top:5px; text-align:center;}
+
+#paged {width:98%; margin:0 auto; padding-top:10px;}
+#paged ul{margin-right:40px;}
+#paged ul li{margin: 15px 10px;}
+#paged ul li a{padding:10px 15px; border: 1px #ccc solid;}
+
+#indexcontent{width:98%; margin:0 auto;}
+#indexcontent a{padding:20px; border: 1px blue solid; display:inline-block; margin:20px;}
+
+
