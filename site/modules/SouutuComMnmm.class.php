@@ -13,7 +13,7 @@ class SouutuComMnmm
 		self::$_download_dir = _DOWNLOAD."/".__CLASS__."/";
 		if(!$epage) $epage = self::$_all_page_num;
 		if($page < 1) $page = 1;
-		for($i=$page; $i<$epage; $i++){
+		for($i=$page; $i<=$epage; $i++){
 			self::$_cur_page = $i;
 			$urls = self::getIndexPageUrls();
 			$urls = self::getInfoPages($urls);
