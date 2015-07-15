@@ -60,3 +60,12 @@ function getPagePic(page)
 	});
 }
 
+function scrollTop()
+{
+	return $("html, body").animate({
+		scrollTop: 0
+	},
+	"slow"),
+	!1
+}
+
