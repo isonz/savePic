@@ -55,7 +55,7 @@ class SouutuComMnmm
                 if($n>0) break;
             };
 			$tmpurl = mb_substr($url,0,-5);
-            for($i=2; $i<=$n; $i++) $tmp[$tmpurl."_".$i] = "";
+            for($i=2; $i<=$n; $i++) $tmp[$tmpurl."_".$i.".html"] = "";
     	}
     	return $tmp;
     }
