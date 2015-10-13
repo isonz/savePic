@@ -119,6 +119,14 @@ ul li{
 	color:#fff;
 }
 
+/****************** Sign in ************************/
+#signin{ width:90%; margin:20px auto;}
+#signin .logo{width:150px; height:50px; margin:10px auto; background:url(../images/logo.png) center center no-repeat; background-size:cover;}
+#signin ul{margin:0 auto; width:100%; max-width:600px; padding-left:0;}
+#signin ul li{ padding:10px 0; float: none; }
+#signin ul li input{width:100%; height:30px; border:1px solid #ccc; padding:0 5px; font-size:16px; font-weight:bold;}
+#signin ul li input.btn-primary{height:40px;}
+
 /****************** play *****************************/
 #content {width:100%;}
 #content .imgbox {width:250px; height:400px;overflow:hidden; float:left; margin:10px;border: 1px #ccc solid;}
